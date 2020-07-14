@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script type="text/javascript" src="js/queueballs.js"></script>
+  <script type="text/javascript" src="js/d3.js"></script>
+    <title>reactive</title>
+    </head>
+  <body>
+    <svg id="svg" xmlns="http://www.w3.org/2000/svg" version="1.1"  baseProfile="full" viewbox="0 0 900 500">
+      </svg>
+	
+  </body>
+  <script type="text/javascript">
+    var qb = { app: new App(4,2), colors: ["#BB4444", "#44BB44", "#4444BB"], th: 0.4 };
+
+//    var adder = setInterval(addTick, 200);
+//    var deleter = setInterval(removeTick, 500);
+        
+    function sleep(ms) {
+       return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function test1() {
+      qb.app = new App(4, 2);
+    let cust1 = new Customer("red", qb.app.get(1));
+      await sleep(20);
+      let cust2 = new Customer("blue", qb.app.get(2));
+      await sleep(20);
+      new Customer("green", qb.app.get(1));
+      await sleep(20);
+      new Customer("red", qb.app.get(1));
+      await sleep(20);
+      new Customer("green", qb.app.get(1));
+      await sleep(20);
+//      qb.app.get(1).shift()
+    console.log(qb.app.get(1).map((cust) => { return `${cust.color}`}));
+    console.log('foreach');
+    qb.app.get(2).foreach((cust) =>  { console.log(cust) });
+    }
+    /*
+    test1();
+    */
+  </script>
+
+  </html>
