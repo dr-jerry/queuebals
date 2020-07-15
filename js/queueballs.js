@@ -3,7 +3,7 @@ class Customer {
 	this.color = color;
 	this.queue = queue;
 	this.id = Date.now();
-	this.queue.push(this)
+	this.queue.push(this, {x: 250, y: 250})
     };
 }
 
@@ -25,7 +25,7 @@ class Queue {
 	    return this.y + i*this.r * 10});
 					      
     }
-    push(el) {
+    push(el, start) {
         this.contents.push(el)
 	let loc = this.location();
 	console.log("label " + this.label + "length " + this.contents.length);
@@ -33,8 +33,10 @@ class Queue {
 	d3.select("svg#svg").selectAll(`circle.${this.label}`)
 	    .data(this.contents, d => d.id).enter()
 	    .append("circle").attr("r", d => {console.log(d);return this.r})
+	    .attr("cx", start.x).attr("cy", start.y)
+	    .attr("class", this.label)
+	    .transition().duration(800).delay(400)
 	    .attr("cx", d => { console.log("csx"); return loc.cx}).attr("cy", loc.cy)
-	    .attr("class", this.label);
     }
     map(fun) {
 	console.log('fun is ' + fun);
