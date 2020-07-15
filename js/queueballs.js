@@ -15,11 +15,15 @@ class Queue {
 	this.label = label;
 	this.contents = [];
     };
-    shift() {
-        let cust = this.contents.pop();
-	d3.select("svg#svg").selectAll(`circle.${this.label}`)
+    shift()  {
+        let cust = this.contents.shift();
+	let queue = d3.select("svg#svg").selectAll(`circle.${this.label}`)
 	    .data(this.contents, cust => cust.id)
-	    .exit().remove();
+	queue.exit().remove();
+	queue.transition().duration(1000).delay((d,i) => i * 200).attr("cy", (d,i) => {
+	    console.log(`cy is  +(${this.y} + ${i}* ${this.r * 10}) = ${this.y + i*this.r * 10}`);
+	    return this.y + i*this.r * 10});
+					      
     }
     push(el) {
         this.contents.push(el)
@@ -27,7 +31,7 @@ class Queue {
 	console.log("label " + this.label + "length " + this.contents.length);
 	console.log(loc);
 	d3.select("svg#svg").selectAll(`circle.${this.label}`)
-	    .data(this.contents).enter()
+	    .data(this.contents, d => d.id).enter()
 	    .append("circle").attr("r", d => {console.log(d);return this.r})
 	    .attr("cx", d => { console.log("csx"); return loc.cx}).attr("cy", loc.cy)
 	    .attr("class", this.label);
@@ -40,8 +44,8 @@ class Queue {
 	this.contents.forEach(x => fun(x));
     }
     location(index = this.contents.length) {
-	console.log("location called ");
-	return {cx: this.x, cy: this.y + index * this.r * 10, r: this.r};
+	console.log(`location called " + (${this.y} + ${index}* ${this.r * 10} = ${this.y + index * this.r * 10} `);
+	return {cx: this.x, cy: this.y + (index-1) * this.r * 10, r: this.r};
     }
 }
 
