@@ -24,16 +24,14 @@ class Queue {
 
     shift(index = this.randomElement(), nextQ)  {
 	if (this.contents.length) {
-            let cust = this.contents.splice(index,1);
+            let cust = this.contents.splice(index,1)[0];
 	    if (nextQ) {
-		console.log("pushing " + cust.id);
+		console.log("pushing to net " + cust.id);
 		nextQ.push(cust, {x:this.x, y:this.y - 10});
 	    }
 	    let queue = d3.select("svg#svg").selectAll(`circle.${this.label}`)
 		.data(this.contents, cust => cust.id);
-	    queue.each(function(d,i) { console.log(`${i} ${index} ${d.pos}`);
-				       if (i >= index) d.pos--;
-				     console.log(`${i} ${index} ${d.pos}`);});
+	    queue.each(function(d,i) { if (i >= index) d.pos--; });
 	    queue.exit().remove();
 	    queue.transition().duration(1000).delay((d,i) => i * 200)
 		.attr("cy", (d,i) => this.y + i*this.r)
@@ -46,26 +44,14 @@ class Queue {
         this.contents.push(el);
 	d3.select("svg#svg").selectAll(`circle.${this.label}`)
 	    .data(this.contents, d => d.id).enter()
-	    .append("circle").attr("r", d => { console.log("radius" +  d.r); return d.r})
+	    .append("circle").attr("r", d => d.r)
 	    .attr("cx", start.x).attr("cy", start.y)
 	    .attr("class", this.label)
 	    .transition().duration(800).delay(400)
-	    .attr("cx", d => {
-		console.log("thais.x " + this.x + "d.pos" + d);return this.x + (d.pos % 2) *this.r})
-	    .attr("cy", d => { console.log("this.y is " + this.y);
-			       return this.y + d.pos * this.r})
+	    .attr("cx", d => this.x + (d.pos % 2) *this.r)
+	    .attr("cy", d => this.y + d.pos * this.r)
     }
-    map(fun) {
-	console.log('fun is ' + fun);
-        return this.contents.map(x => fun(x));
-    }
-    foreach(fun) {
-	this.contents.forEach(x => fun(x));
-    }
-    location(index = this.contents.length) {
-	console.log(`location called " + (${this.y} + ${index}* ${this.r * 10} = ${this.y + index * this.r * 10} `);
-	return {cx: this.x + ((this.l ? 0 : 1) + this.contents.length) % 2 * this.r, cy: this.y + (index-1) * this.r};
-    }
+
 }
 
 class App {
