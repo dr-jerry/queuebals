@@ -30,27 +30,28 @@ class Queue {
 		nextQ.push(cust, {x:this.x, y:this.y - 10});
 	    }
 	    let queue = d3.select("svg#svg").selectAll(`circle.${this.label}`)
-		.data(this.contents, cust => cust.id)
+		.data(this.contents, cust => cust.id);
+	    queue.each(function(d) { d.pos-- });
 	    queue.exit().remove();
 	    queue.transition().duration(1000).delay((d,i) => i * 200)
 		.attr("cy", (d,i) => this.y + i*this.r)
-		.attr("cx", (d,i) => this.x + (((this.l ? 1 : 0) + i) %2) *this.r)
+		.attr("cx", (d,i) => this.x + (d.pos %2) *this.r)
 	}
 					      
     }
     push(el, start) {
-	el.left = (this.contents.size % 2 === 0);
+	el.pos = this.contents.length;
         this.contents.push(el);
-	let loc = this.location();
-	console.log("label " + this.label + "length " + this.contents.length);
-	console.log(loc);
 	d3.select("svg#svg").selectAll(`circle.${this.label}`)
 	    .data(this.contents, d => d.id).enter()
 	    .append("circle").attr("r", d => { console.log("radius" +  d.r); return d.r})
 	    .attr("cx", start.x).attr("cy", start.y)
 	    .attr("class", this.label)
 	    .transition().duration(800).delay(400)
-	    .attr("cx", d => { console.log("csx"); return loc.cx}).attr("cy", loc.cy)
+	    .attr("cx", d => {
+		console.log("thais.x " + this.x + "d.pos" + d);return this.x + (d.pos % 2) *this.r})
+	    .attr("cy", d => { console.log("this.y is " + this.y);
+			       return this.y + (d.pos-1) * this.r})
     }
     map(fun) {
 	console.log('fun is ' + fun);
