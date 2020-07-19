@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
   <script type="text/javascript" src="js/queueballs.js"></script>
   <script type="text/javascript" src="js/d3.js"></script>
+  <script type="text/javascript" src="js/iPath.js"></script>
     <title>reactive</title>
     </head>
   <body>
@@ -14,7 +15,9 @@
 	
   </body>
   <script type="text/javascript">
-    var qb = { app: new App(4,2), colors: ["#BB4444", "#44BB44", "#4444BB"], th: 0.4 };
+    var qb = { app: new App(4,15), colors: ["#BB4444", "#44BB44", "#4444BB"], th: 0.4
+    , waitQ: new Queue(250, 110, 2, 'wait') };
+    
 
 //    var adder = setInterval(addTick, 200);
 //    var deleter = setInterval(removeTick, 500);
@@ -24,16 +27,16 @@
     }
 
     async function test1() {
-      qb.app = new App(4, 2);
-    let cust1 = new Customer("red", qb.app.get(1));
+      
+    let cust1 = new Customer("red", qb.app.get(1), 2);
       await sleep(20);
-      let cust2 = new Customer("blue", qb.app.get(2));
+      let cust2 = new Customer("blue", qb.app.get(2), 2);
       await sleep(20);
-      new Customer("green", qb.app.get(1));
+      new Customer("green", qb.app.get(1),2);
       await sleep(20);
-      new Customer("red", qb.app.get(1));
+      new Customer("red", qb.app.get(1),2);
       await sleep(20);
-      new Customer("green", qb.app.get(1));
+      new Customer("green", qb.app.get(1),2);
       await sleep(20);
 //      qb.app.get(1).shift()
     console.log(qb.app.get(1).map((cust) => { return `${cust.color}`}));
