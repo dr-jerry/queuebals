@@ -31,7 +31,9 @@ class Queue {
 	    }
 	    let queue = d3.select("svg#svg").selectAll(`circle.${this.label}`)
 		.data(this.contents, cust => cust.id);
-	    queue.each(function(d) { d.pos-- });
+	    queue.each(function(d,i) { console.log(`${i} ${index} ${d.pos}`);
+				       if (i >= index) d.pos--;
+				     console.log(`${i} ${index} ${d.pos}`);});
 	    queue.exit().remove();
 	    queue.transition().duration(1000).delay((d,i) => i * 200)
 		.attr("cy", (d,i) => this.y + i*this.r)
@@ -51,7 +53,7 @@ class Queue {
 	    .attr("cx", d => {
 		console.log("thais.x " + this.x + "d.pos" + d);return this.x + (d.pos % 2) *this.r})
 	    .attr("cy", d => { console.log("this.y is " + this.y);
-			       return this.y + (d.pos-1) * this.r})
+			       return this.y + d.pos * this.r})
     }
     map(fun) {
 	console.log('fun is ' + fun);
