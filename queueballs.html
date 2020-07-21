@@ -16,11 +16,11 @@
   </body>
   <script type="text/javascript">
     var qb = { app: new App(4,15), colors: ["#BB4444", "#44BB44", "#4444BB"], th: 0.4
-    , waitQ: new Queue(250, 110, 2, 'wait') };
+    , waitQ: new Queue(250, 110, 4, 'wait') };
     
 
-//    var adder = setInterval(addTick, 200);
-//    var deleter = setInterval(removeTick, 500);
+   var adder = setInterval(qb.app.addTick, 200);
+   var deleter = setInterval(qb.app.removeTick, 200);
         
     function sleep(ms) {
        return new Promise(resolve => setTimeout(resolve, ms));

@@ -64,19 +64,19 @@ class App {
     get(index) {
 	return this.queues[index];
     }
-}
-
-function addTick() {
-    if (Math.random() > qb.th) {
-        let queueNr = Math.floor(Math.random() * 4);
-        var c = new Customer(qb.colors[Math.floor(Math.random() * qb.colors.length)], qb.app.get(queueNr));
-    } 
-}
-
-function removeTick() {
-    if (Math.random() > qb.th) {
-        qb.app.get(Math.floor(Math.random() * 4)).shift(0);
+    addTick() {
+	console.log("adde");
+	if (Math.random() > qb.th) {
+	    console.log("threshold");
+            let queueNr = Math.floor(Math.random() * 4);
+            var c = new Customer(qb.colors[Math.floor(Math.random() * qb.colors.length)], qb.app.get(queueNr), 2);
+	} 
+    }
+    removeTick() {
+	if (Math.random() > qb.th) {
+            qb.app.get(Math.floor(Math.random() * 4)).shift(0);
+	    
+	}
 	
     }
-    
 }
