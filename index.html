@@ -28,7 +28,8 @@
   </body>
   <script type="text/javascript">
     var qb = { app: new App(4,15), colors: ["#BB4444", "#44BB44", "#4444BB"], th: 0.4
-    , waitQ: new Queue(250, 110, 4, 'wait') };
+    //, waitQ: new Queue(250, 110, 4, 'wait')
+    };
     
 
    var adder = setInterval(qb.app.addTick.bind(qb.app), 500);
