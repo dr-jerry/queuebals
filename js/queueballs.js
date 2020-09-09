@@ -54,7 +54,7 @@ class Queue {
 	    let queue = d3.select("svg#svg").selectAll(`circle.${this.label}`)
 		.data(this.contents, cust => cust.id);
 	    queue.each(function(d,i) { if (i >= index) d.pos--; });
-	    queue.exit().transition().duration(300).delay(300).attr("cx", -10).remove();
+	    queue.exit().transition().duration(300).delay(300).attr("cx", 410).remove();
 	    queue.transition().duration(1000).delay((d,i) => i * 200)
 		.attr("cy", (d,i) => this.y + i*this.r)
 		.attr("cx", (d,i) => this.x + (d.pos %2) *this.r)
