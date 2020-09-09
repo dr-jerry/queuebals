@@ -17,14 +17,14 @@ class Queue {
 	this.r = r;
 	this.label = label;
 	this.contents = [];
-	this.shiftCount = 0;this.modu = 4;
+	this.shiftCount = 0;this.modu = 1;
 	console.log("modu is "+ this.modu);
 	this.waiting = false;
 	if (servant) {
 	    d3.select("svg#svg").selectAll(`circle.server_${this.label}`)
 		.data([servant], d => d.id).enter()
 		.append("circle").attr("r", d => d.r)
-		.attr("cx", x).attr("cy", y-40)
+		.attr("cx", x).attr("cy", y-25)
 		.attr("class", "server_" + this.label)
 		.attr("stroke", "#3333FF")
 		.attr("fill", "#3333FF")
@@ -45,7 +45,7 @@ class Queue {
 	if (this.contents.length && this.shiftCount++ % this.modu == this.modu-1) {
 	    d3.select("svg#svg").selectAll(`circle.server_${this.label}`)
 		.transition().duration(200).delay(0)
-	        .attr("cy", d => this.y - 40 + 15);
+	        .attr("cy", d => this.y - 40 - 15);
             let cust = this.contents.splice(index,1)[0];
 	    if (nextQ) {
 //		console.log("pushing to net " + cust.id);
@@ -58,10 +58,11 @@ class Queue {
 	    queue.transition().duration(1000).delay((d,i) => i * 200)
 		.attr("cy", (d,i) => this.y + i*this.r)
 		.attr("cx", (d,i) => this.x + (d.pos %2) *this.r)
-	} else if (this.shiftCount % this.modu == Math.floor(this.modu/2)) {
+	}
+	if (this.shiftCount % this.modu == Math.floor(this.modu/2)) {
 	    d3.select("svg#svg").selectAll(`circle.server_${this.label}`)
-		.transition().duration(200).delay(0)
-	        .attr("cy", d => this.y - 40 - 15);
+		.transition().duration(200).delay(this.modu == 1 ? 200 : 0)
+	        .attr("cy", d => this.y - 40 + 15);
 	}
     }
     push(el, start) {
