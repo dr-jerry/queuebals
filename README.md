@@ -1,3 +1,16 @@
+A visualiazation of clients (black balls) in queue (first in first out)<br>
+This one is to visualize sequential programming vs concurrent programming. Also the McDonalds (10 yrs ago) vs BurgerKing
+where in the McDonalds you just waited in your queue until the servant (blue ball) had collected the order from the kitchen (backend).
+
+Opposed to the Burger King where you give your order and then go to a second waiting line, where your order would arrive.
+McDonalds displays the sequential way of programming wereas BurgerKing showcases the concurrent reactive one.
+
+To do:
+Beautify, replace the entrance, visualize the backend delivering to the queue.
+
+2 branches mcdonalds en burger king.
+This is created using:
+
 # D3: Data-Driven Documents
 
 <a href="https://d3js.org"><img src="https://d3js.org/logo.svg" align="left" hspace="10" vspace="6"></a>
